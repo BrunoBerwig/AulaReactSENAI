@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Column from "./components/column";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+  const [taskName, setTaskName] = useState("");
+
+  const addTask = () => {
+    if (taskName.trim()) {
+      setTasks([...tasks, { name: taskName, status: "todo", completed: false }]);
+      setTaskName("");
+    }
+  };
+
+  const updateTaskStatus = (taskIndex, newStatus) => {
+    const updatedTasks = [...tasks];
+    updatedTasks[taskIndex].status = newStatus;
+    updatedTasks[taskIndex].completed = newStatus === "done"; // Define como concluído se o status for 'done'
+    setTasks(updatedTasks);
+  };
+
+  const deleteTask = (taskIndex) => {
+    const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
+    setTasks(updatedTasks);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <h1>Lista de tarefas</h1>
+      <div>
+        <input
+          type="text"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+          placeholder="Adicionar nova tarefa"
+        />
+        <button onClick={addTask}>Adicionar</button>
+      </div>
+      <div className="columns">
+        <Column
+          title="A Fazer"
+          tasks={tasks.filter((task) => task.status === "todo")}
+          updateTaskStatus={updateTaskStatus}
+          deleteTask={deleteTask}
+          status="todo"
+        />
+        <Column
+          title="Concluído"
+          tasks={tasks.filter((task) => task.status === "done")}
+          updateTaskStatus={updateTaskStatus}
+          deleteTask={deleteTask}
+          status="done"
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default App;

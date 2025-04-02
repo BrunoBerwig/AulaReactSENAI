@@ -1,0 +1,21 @@
+.column {
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 20px;
+    width: 40%;
+    background-color: #1e1e1e;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    min-height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.column h2 {
+    margin: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #ffffff;
+}

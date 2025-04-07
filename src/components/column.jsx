@@ -2,21 +2,21 @@ import React from "react";
 import TaskItem from "./TaskItem";
 import "./column.css";
 
-const Column = ({ title, tasks, updateTaskStatus, deleteTask, status,  }) => {
+const Column = ({ title, tasks, updateTaskStatus, deleteTask, editTask, status }) => {
   return (
     <div className="column">
       <h2>{title}</h2>
-      {tasks.map((task, index) => (
+      {tasks.map((task) => (
         <TaskItem
-          key={index}
+          key={task.id}
           task={task}
           onMove={() =>
-            updateTaskStatus(
-              index,
-              status === "todo" ? "done" : "todo"
-            )
+            updateTaskStatus(task.id, status === "todo" ? "done" : "todo")
           }
-          onDelete={() => deleteTask(index)}
+          onDelete={() => deleteTask(task.id)}
+          onEdit={(newName, newDescription) =>
+            editTask(task.id, newName, newDescription)
+          }
         />
       ))}
     </div>

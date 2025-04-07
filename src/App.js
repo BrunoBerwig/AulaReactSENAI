@@ -5,39 +5,62 @@ import "./App.css";
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
 
   const addTask = () => {
     if (taskName.trim()) {
-      setTasks([...tasks, { name: taskName, status: "todo", completed: false }]);
+      const newTask = {
+        id: Date.now(),
+        name: taskName,
+        description: taskDescription,
+        status: "todo",
+        completed: false,
+      };
+      setTasks([...tasks, newTask]);
       setTaskName("");
+      setTaskDescription("");
     }
   };
 
-  const updateTaskStatus = (taskIndex, newStatus) => {
-    const updatedTasks = [...tasks];
-    updatedTasks[taskIndex].status = newStatus;
-    updatedTasks[taskIndex].completed = newStatus === "done";
+  const updateTaskStatus = (taskId, newStatus) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId
+        ? { ...task, status: newStatus, completed: newStatus === "done" }
+        : task
+    );
     setTasks(updatedTasks);
   };
 
-  const deleteTask = (taskIndex) => {
-    const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
+  const deleteTask = (taskId) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
 
-  const editTaskName = (taskIndex, newName) => {
-    if (newName.trim()) {
-      const updatedTasks = [...tasks];
-      updatedTasks[taskIndex].name = newName;
-      setTasks(updatedTasks);
-    }
+  const editTask = (taskId, newName, newDescription) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId
+        ? { ...task, name: newName, description: newDescription }
+        : task
+    );
+    setTasks(updatedTasks);
   };
 
   return (
     <div className="container">
-      <h1>Lista de tarefas</h1>
+      <h1>Lista de Tarefas</h1>
       <div>
-        <input type="text" value={taskName} onChange={(e) => setTaskName(e.target.value)} placeholder="Adicionar nova tarefa"/>
+        <input
+          type="text"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
+          placeholder="Adicionar título da tarefa"
+        />
+        <input
+          type="text"
+          value={taskDescription}
+          onChange={(e) => setTaskDescription(e.target.value)}
+          placeholder="Adicionar descrição da tarefa"
+        />
         <button onClick={addTask}>Adicionar</button>
       </div>
       <div className="columns">
@@ -46,7 +69,7 @@ const App = () => {
           tasks={tasks.filter((task) => task.status === "todo")}
           updateTaskStatus={updateTaskStatus}
           deleteTask={deleteTask}
-          editTaskName={editTaskName}
+          editTask={editTask}
           status="todo"
         />
         <Column
@@ -54,7 +77,7 @@ const App = () => {
           tasks={tasks.filter((task) => task.status === "done")}
           updateTaskStatus={updateTaskStatus}
           deleteTask={deleteTask}
-          editTaskName={editTaskName}
+          editTask={editTask}
           status="done"
         />
       </div>

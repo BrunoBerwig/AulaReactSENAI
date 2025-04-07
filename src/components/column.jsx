@@ -2,7 +2,7 @@ import React from "react";
 import TaskItem from "./TaskItem";
 import "./column.css";
 
-const Column = ({ title, tasks, updateTaskStatus, deleteTask, status }) => {
+const Column = ({ title, tasks, updateTaskStatus, deleteTask, status,  }) => {
   return (
     <div className="column">
       <h2>{title}</h2>
@@ -13,7 +13,7 @@ const Column = ({ title, tasks, updateTaskStatus, deleteTask, status }) => {
           onMove={() =>
             updateTaskStatus(
               index,
-              status === "todo" ? "done" : "todo" // Alterna entre "A Fazer" e "Concluído"
+              status === "todo" ? "done" : "todo"
             )
           }
           onDelete={() => deleteTask(index)}

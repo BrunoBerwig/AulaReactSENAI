@@ -16,7 +16,7 @@ const App = () => {
   const updateTaskStatus = (taskIndex, newStatus) => {
     const updatedTasks = [...tasks];
     updatedTasks[taskIndex].status = newStatus;
-    updatedTasks[taskIndex].completed = newStatus === "done"; // Define como concluído se o status for 'done'
+    updatedTasks[taskIndex].completed = newStatus === "done";
     setTasks(updatedTasks);
   };
 
@@ -25,16 +25,19 @@ const App = () => {
     setTasks(updatedTasks);
   };
 
+  const editTaskName = (taskIndex, newName) => {
+    if (newName.trim()) {
+      const updatedTasks = [...tasks];
+      updatedTasks[taskIndex].name = newName;
+      setTasks(updatedTasks);
+    }
+  };
+
   return (
     <div className="container">
       <h1>Lista de tarefas</h1>
       <div>
-        <input
-          type="text"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-          placeholder="Adicionar nova tarefa"
-        />
+        <input type="text" value={taskName} onChange={(e) => setTaskName(e.target.value)} placeholder="Adicionar nova tarefa"/>
         <button onClick={addTask}>Adicionar</button>
       </div>
       <div className="columns">
@@ -43,6 +46,7 @@ const App = () => {
           tasks={tasks.filter((task) => task.status === "todo")}
           updateTaskStatus={updateTaskStatus}
           deleteTask={deleteTask}
+          editTaskName={editTaskName}
           status="todo"
         />
         <Column
@@ -50,6 +54,7 @@ const App = () => {
           tasks={tasks.filter((task) => task.status === "done")}
           updateTaskStatus={updateTaskStatus}
           deleteTask={deleteTask}
+          editTaskName={editTaskName}
           status="done"
         />
       </div>

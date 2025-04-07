@@ -1,15 +1,15 @@
 import React from "react";
 import TaskItem from "./TaskItem";
 
-const TaskList = ({ tasks, toggleCompletion, deleteTask }) => {
+const TaskList = ({ tarefas, marcarCompleto, apagarTarefa }) => {
   return (
     <div>
-      {tasks.map((task, index) => (
+      {tarefas.map((task, index) => (
         <TaskItem
           key={index}
           task={task}
-          onToggle={() => toggleCompletion(index)}
-          onDelete={() => deleteTask(index)}
+          onToggle={() => marcarCompleto(index)}
+          onDelete={() => apagarTarefa(index)}
         />
       ))}
     </div>

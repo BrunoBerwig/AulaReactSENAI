@@ -1,25 +1,17 @@
 import React, { useState } from "react";
 import Column from "./components/column";
+import TaskForm from "./components/taskForm";
 import "./App.css";
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
-  const [taskName, setTaskName] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
-  const addTask = () => {
-    if (taskName.trim()) {
-      const newTask = {
-        id: Date.now(),
-        name: taskName,
-        description: taskDescription,
-        status: "todo",
-        completed: false,
-      };
-      setTasks([...tasks, newTask]);
-      setTaskName("");
-      setTaskDescription("");
-    }
+  const addTask = (newTask) => {
+    setTasks([
+      ...tasks,
+      { ...newTask, priority: newTask.priority || "Média" } // Adiciona prioridade padrão
+    ]);
   };
 
   const updateTaskStatus = (taskId, newStatus) => {
@@ -36,36 +28,33 @@ const App = () => {
     setTasks(updatedTasks);
   };
 
-  const editTask = (taskId, newName, newDescription) => {
+  const editTask = (taskId, newName, newDescription, newDeadline, newPriority) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskId
-        ? { ...task, name: newName, description: newDescription }
+        ? {
+            ...task,
+            name: newName,
+            description: newDescription,
+            deadline: newDeadline,
+            priority: newPriority || task.priority // Mantém prioridade anterior se não for alterada
+          }
         : task
     );
     setTasks(updatedTasks);
   };
 
-  // Quantidade de tarefas pendentes
   const pendingCount = tasks.filter((task) => task.status === "todo").length;
 
   return (
     <div className="container">
       <h1>Lista de Tarefas</h1>
-      <div>
-        <input
-          type="text"
-          value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
-          placeholder="Adicionar título da tarefa"
+      <button onClick={() => setShowForm(true)}>Adicionar uma tarefa</button>
+      {showForm && (
+        <TaskForm
+          onAddTask={addTask}
+          onClose={() => setShowForm(false)}
         />
-        <input
-          type="text"
-          value={taskDescription}
-          onChange={(e) => setTaskDescription(e.target.value)}
-          placeholder="Adicionar descrição da tarefa"
-        />
-        <button onClick={addTask}>Adicionar</button>
-      </div>
+      )}
       <div className="columns">
         <Column
           title="A Fazer"

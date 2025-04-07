@@ -1,0 +1,85 @@
+.task-form {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.task-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.task-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.task-form input,
+.task-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #555;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.task-form textarea {
+    resize: none;
+    height: 100px;
+}
+
+.task-form input:focus,
+.task-form textarea:focus {
+    border-color: #000000;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    outline: none;
+}
+
+.task-form button {
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.task-form button[type="submit"] {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.task-form button[type="submit"]:hover {
+    background-color: #121213;
+}
+
+.task-form button[type="button"] {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.task-form button[type="button"]:hover {
+    background-color: #0e0d0d;
+}
+
+.task-form input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

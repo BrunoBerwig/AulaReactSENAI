@@ -45,6 +45,9 @@ const App = () => {
     setTasks(updatedTasks);
   };
 
+  // Quantidade de tarefas pendentes
+  const pendingCount = tasks.filter((task) => task.status === "todo").length;
+
   return (
     <div className="container">
       <h1>Lista de Tarefas</h1>
@@ -71,6 +74,7 @@ const App = () => {
           deleteTask={deleteTask}
           editTask={editTask}
           status="todo"
+          extraInfo={`Você tem ${pendingCount} tarefa(s) pendente(s)`}
         />
         <Column
           title="Concluído"
